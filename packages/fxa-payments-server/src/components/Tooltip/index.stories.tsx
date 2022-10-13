@@ -99,7 +99,7 @@ const MockPage = ({ children }: MockPageProps) => {
   );
 };
 
-const storyWithOneField = (dismissable: boolean, storyName?: string) => {
+const storyWithOneField = (dismissable: boolean) => {
   const story = () => (
     <MockPage>
       {dismissable ? (
@@ -120,7 +120,6 @@ const storyWithOneField = (dismissable: boolean, storyName?: string) => {
     </MockPage>
   );
 
-  if (storyName) story.storyName = storyName;
   return story;
 };
 
@@ -129,8 +128,7 @@ const storyWithMultipleFields = (
     showBelow?: boolean;
     clientHeight?: number;
     fieldText?: string;
-  }[],
-  storyName?: string
+  }[]
 ) => {
   const story = () => (
     <MockPage>
@@ -145,53 +143,46 @@ const storyWithMultipleFields = (
     </MockPage>
   );
 
-  if (storyName) story.storyName = storyName;
   return story;
 };
 
 // one field
-export const Default = storyWithOneField(false, 'default');
-export const Dismissible = storyWithOneField(true, 'dismissible');
+export const Default = storyWithOneField(false);
+export const Dismissible = storyWithOneField(true);
 
 // multiple fields
-export const ShowBelow = storyWithMultipleFields(
-  [
-    {
-      showBelow: false,
-      clientHeight: undefined,
-      fieldText: 'showBelow = false',
-    },
-    {
-      showBelow: true,
-      clientHeight: undefined,
-      fieldText: 'showBelow default',
-    },
-    {
-      showBelow: true,
-      clientHeight: undefined,
-      fieldText: 'showBelow = true',
-    },
-  ],
-  'showBelow'
-);
+export const ShowBelow = storyWithMultipleFields([
+  {
+    showBelow: false,
+    clientHeight: undefined,
+    fieldText: 'showBelow = false',
+  },
+  {
+    showBelow: true,
+    clientHeight: undefined,
+    fieldText: 'showBelow default',
+  },
+  {
+    showBelow: true,
+    clientHeight: undefined,
+    fieldText: 'showBelow = true',
+  },
+]);
 
-export const clientHeight = storyWithMultipleFields(
-  [
-    {
-      showBelow: true,
-      clientHeight: 300,
-      fieldText: 'clientHeight = 300',
-    },
-    {
-      showBelow: false,
-      clientHeight: 300,
-      fieldText: 'clientHeight = 300, showBelow = false',
-    },
-    {
-      showBelow: true,
-      clientHeight: 1000,
-      fieldText: 'clientHeight = 1000',
-    },
-  ],
-  'clientHeight'
-);
+export const clientHeight = storyWithMultipleFields([
+  {
+    showBelow: true,
+    clientHeight: 300,
+    fieldText: 'clientHeight = 300',
+  },
+  {
+    showBelow: false,
+    clientHeight: 300,
+    fieldText: 'clientHeight = 300, showBelow = false',
+  },
+  {
+    showBelow: true,
+    clientHeight: 1000,
+    fieldText: 'clientHeight = 1000',
+  },
+]);
