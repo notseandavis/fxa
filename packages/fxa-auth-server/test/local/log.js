@@ -196,13 +196,13 @@ describe('log', () => {
     assert.calledWithMatch(mocks.mozlog, { app: opts.name + '-1' });
     assert.calledWithMatch(mocks.mozlog, { app: opts.name + '-2' });
     assert.calledWithMatch(mocks.mozlog, { app: opts.name + '-1-1' });
-    assert.calledWithMatch(logger.warn, 'init', {
+    assert.calledWithMatch(logger.debug, 'init', {
       msg: `Logger with name of ${opts.name} already registered. Adjusting name to ${opts.name}-1 to prevent double log scenario.`,
     });
-    assert.calledWithMatch(logger.warn, 'init', {
+    assert.calledWithMatch(logger.debug, 'init', {
       msg: `Logger with name of ${opts.name} already registered. Adjusting name to ${opts.name}-2 to prevent double log scenario.`,
     });
-    assert.calledWithMatch(logger.warn, 'init', {
+    assert.calledWithMatch(logger.debug, 'init', {
       msg: `Logger with name of ${opts.name}-1 already registered. Adjusting name to ${opts.name}-1-1 to prevent double log scenario.`,
     });
   });

@@ -43,7 +43,7 @@ describe('config-builder', () => {
   it('builds', () => {
     const config = buildSentryConfig(testConfig, loggerSpy);
     assert.exists(config);
-    assert.isTrue(loggerSpy.info.called);
+    assert.isTrue(loggerSpy.debug.called);
   });
 
   it('picks correct defaults', () => {

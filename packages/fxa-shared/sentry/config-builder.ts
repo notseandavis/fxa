@@ -45,7 +45,7 @@ function checkSentryConfig(config: SentryConfigOpts, log: ILogger) {
     raiseError('sentry.dsn not specified. sentry disabled.');
     return;
   } else {
-    log?.info('sentry-config-builder', {
+    log?.debug('sentry-config-builder', {
       msg: `Config setting for sentry.dsn specified, enabling sentry for env ${config.sentry.env}!`,
     });
   }
@@ -59,7 +59,7 @@ function checkSentryConfig(config: SentryConfigOpts, log: ILogger) {
       ).join(',')}`
     );
   } else {
-    log?.info('sentry-config-builder', {
+    log?.debug('sentry-config-builder', {
       msg: 'sentry targeting: ' + sentryEnvMap[config.sentry.env],
     });
   }

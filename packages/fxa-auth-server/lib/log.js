@@ -53,7 +53,7 @@ function Lug(options) {
   // Encourage avoiding scenarios where loggers names have to be incremented.
   if (this.name !== name) {
     const msg = `Logger with name of ${name} already registered. Adjusting name to ${this.name} to prevent double log scenario.`;
-    this.logger.warn('init', { msg });
+    this.logger.debug('init', { msg });
   }
 }
 util.inherits(Lug, EventEmitter);
