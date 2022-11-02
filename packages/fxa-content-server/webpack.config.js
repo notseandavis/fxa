@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const path = require('path');
 const config = require('./server/lib/configuration').getProperties();
 const CopyPlugin = require('copy-webpack-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const ENV = config.env;
 const webpackConfig = {
@@ -237,6 +238,7 @@ const webpackConfig = {
         to: '../settings',
       },
     ]),
+    new Visualizer(),
   ],
 
   stats: { colors: true },
