@@ -11,6 +11,55 @@ module.exports = (app, logger) => {
   } = require('celebrate');
   const validationErrorHandler = validationErrorHandlerFactory();
 
+  /**
+   * Get route handlers for a `routeDefinition`.
+   *
+   * @param {Object} routeDefinition
+   *  @param {String} routeDefinition.method one of `GET`, `POST`, etc.
+   *  @param {String|RegExp} routeDefinition.path define the path for the route
+   *  @param {Function} routeDefinition.process handler, passes (req, res, next) as arguments
+   *  @param {Object} [routeDefinition.cors] enables CORS
+   *   Follows [cors](https://github.com/expressjs/cors) conventions.
+   *  @param {Function} [routeDefinition.preProcess] Use to do any pre-processing before validation,
+   *   such as converting from text to JSON. Passes (req, res, next) as arguments
+   *  @param {Object} [routeDefinition.validate] declare JOI validation.
+   *   Follows [celebrate](https://www.npmjs.com/package/celebrate) conventions.
+   */
+  function getRouteHandlers(routeDefinition) {
+    const routeHandlers = [];
+
+    // Enable CORS using https://github.com/expressjs/cors
+    // If defined, `cors` can be truthy or an object.
+    // Objects are passed to the middleware directly.
+    // Other truthy values use the default configuration.
+    if (routeDefinition.cors) {
+      const corsConfig =
+        typeof routeDefinition.cors === 'object'
+          ? routeDefinition.cors
+          : undefined;
+      // Enable the pre-flight OPTIONS request
+      const corsHandler = cors(corsConfig);
+      app.options(routeDefinition.path, corsHandler);
+      routeHandlers.push(corsHandler);
+    }
+
+    if (routeDefinition.preProcess) {
+      routeHandlers.push(routeDefinition.preProcess);
+    }
+
+    if (routeDefinition.validate) {
+      routeHandlers.push(
+        celebrate(routeDefinition.validate, {
+          // silently drop any unknown fields within objects on the ground.
+          stripUnknown: { arrays: false, objects: true },
+        })
+      );
+    }
+
+    routeHandlers.push(routeDefinition.process);
+    return routeHandlers;
+  }
+
   return {
     /**
      * Add a route using `routeDefinition`.
@@ -32,37 +81,7 @@ module.exports = (app, logger) => {
         throw new Error('Invalid route definition');
       }
 
-      const routeHandlers = [];
-
-      // Enable CORS using https://github.com/expressjs/cors
-      // If defined, `cors` can be truthy or an object.
-      // Objects are passed to the middleware directly.
-      // Other truthy values use the default configuration.
-      if (routeDefinition.cors) {
-        const corsConfig =
-          typeof routeDefinition.cors === 'object'
-            ? routeDefinition.cors
-            : undefined;
-        // Enable the pre-flight OPTIONS request
-        const corsHandler = cors(corsConfig);
-        app.options(routeDefinition.path, corsHandler);
-        routeHandlers.push(corsHandler);
-      }
-
-      if (routeDefinition.preProcess) {
-        routeHandlers.push(routeDefinition.preProcess);
-      }
-
-      if (routeDefinition.validate) {
-        routeHandlers.push(
-          celebrate(routeDefinition.validate, {
-            // silently drop any unknown fields within objects on the ground.
-            stripUnknown: { arrays: false, objects: true },
-          })
-        );
-      }
-
-      routeHandlers.push(routeDefinition.process);
+      const routeHandlers = getRouteHandlers(routeDefinition);
       app[routeDefinition.method](routeDefinition.path, ...routeHandlers);
     },
 
@@ -79,6 +98,7 @@ module.exports = (app, logger) => {
         next(err);
       }
     },
+    getRouteHandlers,
   };
 
   function isValidRouteDefinition(route) {
