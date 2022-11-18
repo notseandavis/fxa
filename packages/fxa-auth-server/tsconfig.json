@@ -1,4 +1,5 @@
 {
+  "strictNullChecks": true,
   "extends": "../../_dev/tsconfig.node.json",
   "compilerOptions": {
     "experimentalDecorators": true,
