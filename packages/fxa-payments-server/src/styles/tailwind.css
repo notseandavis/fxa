@@ -26,7 +26,7 @@
 }
 
 .payment-panel {
-  @apply mb-6 tablet:mt-6 tablet:max-w-xs tablet:col-start-2 tablet:col-end-auto tablet:row-start-1 tablet:row-end-3;
+  @apply mb-6 tablet:mt-6 tablet:min-w-[18rem] tablet:max-w-xs tablet:col-start-2 tablet:col-end-auto tablet:row-start-1 tablet:row-end-3;
 }
 
 /* footer copy */
@@ -128,8 +128,8 @@
 }
 
 .main-content {
-  @apply grid mt-16 mx-6;
-  @apply tablet:grid-cols-[minmax(min-content,500px)_minmax(20rem,1fr)] tablet:gap-x-12 tablet:mt-[80px] tablet:mb-auto tablet:mx-3;
+  @apply grid mt-16 mx-7;
+  @apply tablet:grid-cols-[minmax(min-content,600px)_minmax(20rem,1fr)] tablet:gap-x-8 tablet:mt-[80px] tablet:mb-auto tablet:mx-3;
 }
 
 .payment-button {
