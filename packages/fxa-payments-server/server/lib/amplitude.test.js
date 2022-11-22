@@ -9,8 +9,8 @@ const mockAmplitudeConfig = {
   schemaValidation: true,
   rawEvents: false,
 };
-jest.mock('fxa-shared/metrics/amplitude.js', () => ({
-  ...jest.requireActual('fxa-shared/metrics/amplitude.js'),
+jest.mock('fxa-shared/metrics/amplitude', () => ({
+  ...jest.requireActual('fxa-shared/metrics/amplitude'),
   validate: mockSchemaValidatorFn,
 }));
 let scope;

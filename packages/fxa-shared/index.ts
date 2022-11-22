@@ -20,6 +20,7 @@ import {
 } from './subscriptions/metadata';
 import * as stripe from './subscriptions/stripe';
 import * as subscriptions from './subscriptions/type-guards';
+import express from './express';
 
 module.exports = {
   email: {
@@ -29,6 +30,7 @@ module.exports = {
   experiments: {
     BaseGroupingRule,
   },
+  express,
   featureFlags,
   l10n: {
     localizeTimestamp,
