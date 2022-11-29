@@ -9,7 +9,7 @@
     <mj-text css-class="text-header">
       <span data-l10n-id="subscriptionReactivation-title" data-l10n-args="<%= JSON.stringify({productName}) %>">Thank you for reactivating your <%- productName %> subscription!</span>
     </mj-text>
-
+    <%# TODO: Use subscriptionCharges partial view if necessary? %>
     <mj-text css-class="text-body">
       <span data-l10n-id="subscriptionReactivation-content" data-l10n-args="<%= JSON.stringify({invoiceTotal, nextInvoiceDateOnly}) %>">
         Your billing cycle and payment will remain the same. Your next charge will be <%- invoiceTotal %> on <%- nextInvoiceDateOnly %>. Your subscription will automatically renew each billing period unless you choose to cancel.

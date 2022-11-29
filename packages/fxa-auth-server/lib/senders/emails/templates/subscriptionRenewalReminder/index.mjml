@@ -11,7 +11,7 @@
     <mj-text css-class="text-body">
       <span data-l10n-id="subscriptionRenewalReminder-content-greeting" data-l10n-args="<%= JSON.stringify({productName}) %>">Dear <%- productName %> customer,</span>
     </mj-text>
-
+    <%# TODO: Use subscriptionCharges partial view if necessary? %>
     <mj-text css-class="text-body">
       <span data-l10n-id="subscriptionRenewalReminder-content-current" data-l10n-args="<%= JSON.stringify({invoiceTotal, planInterval, planIntervalCount, reminderLength}) %>">
         Your current subscription is set to automatically renew in <%- reminderLength %> days. At that time, Mozilla will renew your <%- planIntervalCount%> <%- planInterval%> subscription and a charge of <%- invoiceTotal%> will be applied to the payment method on your account.
