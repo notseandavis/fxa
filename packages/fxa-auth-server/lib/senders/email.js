@@ -388,6 +388,8 @@ module.exports = function (log, config, bounces) {
   };
 
   Mailer.prototype.send = async function (message) {
+    // Template variables are set up per email at this level, maybe a quick win to add some validation/sanity check at this level
+    // E.g. "if there is an amount, there should also be a tax amount", etc
     log.trace(`mailer.${message.template}`, {
       email: message.email,
       uid: message.uid,
@@ -1773,6 +1775,8 @@ module.exports = function (log, config, bounces) {
       productIconURLOld,
       productNameOld,
       productNameNew,
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       paymentAmountOldInCents,
       paymentAmountOldCurrency,
       paymentAmountNewInCents,
@@ -1807,6 +1811,8 @@ module.exports = function (log, config, bounces) {
         productIconURLOld,
         productName: productNameNew,
         productNameOld,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         paymentAmountOld: this._getLocalizedCurrencyString(
           paymentAmountOldInCents,
           paymentAmountOldCurrency,
@@ -1839,6 +1845,8 @@ module.exports = function (log, config, bounces) {
       productIconURLOld,
       productNameOld,
       productNameNew,
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       paymentAmountOldInCents,
       paymentAmountOldCurrency,
       paymentAmountNewInCents,
@@ -1878,6 +1886,8 @@ module.exports = function (log, config, bounces) {
         productIconURLOld,
         productName: productNameNew,
         productNameOld,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         paymentAmountOld: this._getLocalizedCurrencyString(
           paymentAmountOldInCents,
           paymentAmountOldCurrency,
@@ -2047,6 +2057,8 @@ module.exports = function (log, config, bounces) {
       planEmailIconURL,
       productName,
       invoiceDate,
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       invoiceTotalInCents,
       invoiceTotalCurrency,
     } = message;
@@ -2068,10 +2080,12 @@ module.exports = function (log, config, bounces) {
     const headers = {};
 
     return this.send({
+      // Not as easy win - This would be a lot nicer if it was strongly typed in typescript. Could create an interface/implementations for each template type, etc. but thats a lot more work.
       ...message,
       headers,
       layout: 'subscription',
       template,
+      // Potential easy win - Maybe templateValues could be a shared function which generates this object and adds assertions/guard rails around the expected values required for each tempalte
       templateValues: {
         ...links,
         productName,
@@ -2084,6 +2098,8 @@ module.exports = function (log, config, bounces) {
           invoiceDate
         ),
         icon: planEmailIconURL,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         invoiceTotal: this._getLocalizedCurrencyString(
           invoiceTotalInCents,
           invoiceTotalCurrency,
@@ -2102,6 +2118,8 @@ module.exports = function (log, config, bounces) {
       planEmailIconURL,
       productName,
       invoiceDate,
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       invoiceTotalInCents,
       invoiceTotalCurrency,
       serviceLastActiveDate,
@@ -2148,6 +2166,8 @@ module.exports = function (log, config, bounces) {
         ),
         icon: planEmailIconURL,
         productName,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         invoiceTotal: this._getLocalizedCurrencyString(
           invoiceTotalInCents,
           invoiceTotalCurrency,
@@ -2161,6 +2181,8 @@ module.exports = function (log, config, bounces) {
 
   Mailer.prototype.subscriptionFailedPaymentsCancellationEmail =
     async function (message) {
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       const { email, uid, productId, planId, planEmailIconURL, productName } =
         message;
 
@@ -2185,6 +2207,8 @@ module.exports = function (log, config, bounces) {
         headers,
         layout: 'subscription',
         template,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         templateValues: {
           ...links,
           uid,
@@ -2204,6 +2228,8 @@ module.exports = function (log, config, bounces) {
       planId,
       planEmailIconURL,
       productName,
+      // TODO: add invoiceTaxAmountInCents if necessary?
+      // TODO: add showTaxAmount if necessary?
       invoiceTotalInCents,
       invoiceTotalCurrency,
       cardType,
@@ -2244,6 +2270,8 @@ module.exports = function (log, config, bounces) {
         ),
         icon: planEmailIconURL,
         productName,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         invoiceTotal: this._getLocalizedCurrencyString(
           invoiceTotalInCents,
           invoiceTotalCurrency,
@@ -2258,6 +2286,8 @@ module.exports = function (log, config, bounces) {
   };
 
   Mailer.prototype.subscriptionRenewalReminderEmail = async function (message) {
+    // TODO: add invoiceTaxAmountInCents if necessary?
+    // TODO: add showTaxAmount if necessary?
     const { email, uid, subscription } = message;
 
     const enabled = config.subscriptions.transactionalEmails.enabled;
@@ -2297,6 +2327,8 @@ module.exports = function (log, config, bounces) {
         reminderLength: message.reminderLength,
         planIntervalCount: message.planIntervalCount,
         planInterval: message.planInterval,
+        // TODO: add invoiceTaxAmountInCents if necessary?
+        // TODO: add showTaxAmount if necessary?
         invoiceTotal: this._getLocalizedCurrencyString(
           message.invoiceTotalInCents,
           message.invoiceTotalCurrency,
