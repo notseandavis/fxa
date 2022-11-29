@@ -13,6 +13,7 @@
 <mj-section>
   <mj-column>
     <mj-text css-class="text-body">
+      <%# TODO: Use subscriptionCharges partial view if necessary? %>
       <% if (!showOutstandingBalance) { %>
         <span data-l10n-id="subscriptionCancellation-content-2" data-l10n-args="<%= JSON.stringify({productName, invoiceTotal, invoiceDateOnly, serviceLastActiveDateOnly}) %>">
           We’ve cancelled your <%- productName %> subscription. Your final payment of <%- invoiceTotal %> was paid on <%- invoiceDateOnly %>.

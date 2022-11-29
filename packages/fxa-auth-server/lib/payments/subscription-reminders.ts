@@ -150,6 +150,7 @@ export class SubscriptionReminders {
           planIntervalCount: interval_count,
           planInterval: interval,
           // Using invoice prefix instead of plan to accommodate `yarn write-emails`.
+          // TODO: Add invoiceTaxAmount if necessary?
           invoiceTotalInCents: amount,
           invoiceTotalCurrency: currency,
           productMetadata: formattedSubscription.productMetadata,
